@@ -1,0 +1,16 @@
+{
+  "name": "winebot",
+  "version": "1.0.0",
+  "description": "A crazy wine bot",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [],
+  "author": "Victor Goubet & Chloé Daems",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "uuid": "^8.3.2"
+  }
+}
