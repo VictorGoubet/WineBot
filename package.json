@@ -2,15 +2,22 @@
   "name": "winebot",
   "version": "1.0.0",
   "description": "A crazy wine bot",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "nodemon app.js"
   },
   "keywords": [],
   "author": "Victor Goubet & Chloé Daems",
   "license": "ISC",
   "dependencies": {
     "axios": "^0.21.1",
+    "body-parser": "^1.19.0",
+    "cheerio": "^1.0.0-rc.5",
+    "d": "^1.0.1",
+    "express": "^4.17.1",
+    "mathjs": "^9.3.0",
+    "nodemon": "^2.0.7",
+    "request": "^2.88.2",
     "uuid": "^8.3.2"
   }
 }
