@@ -2,12 +2,12 @@ const mapIntent = function(data, FB){
   
   let id = data.sender.id
   let message = data.message
-  console.log(message)
+  console.log(message.nlp.entities.name)
 
   switch(message.nlp.intents[0].name){
 
     case 'info_wine':
-      FB.txt(id, "Alright, I have a result! ")
+      FB.txt(id, "Alright, I have maybe a result! ")
       .then(FB.wineTemplate(id, wine))
         break;
 
@@ -21,7 +21,6 @@ const mapIntent = function(data, FB){
       .then(FB.wineTemplate(id, wine))
       break;
 }
-
 }
 
 

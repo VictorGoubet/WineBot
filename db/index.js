@@ -43,7 +43,7 @@ module.exports.insert = async (products,MONGODB_COLLECTION) => {
     const collection = db.collection(MONGODB_COLLECTION);
     // More details
     // https://docs.mongodb.com/manual/reference/method/db.collection.insertMany/#insert-several-document-specifying-an-id-field
-    const result = await collection.insertMany(products, {'ordered': false});
+    const result = await collection.insertMany(products, {'ordered': false},{useUnifiedTopology: true});
     return result;
 
   } catch (error) {
