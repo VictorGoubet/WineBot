@@ -14,6 +14,14 @@ class FBeamer{
       console.log("Webhook is registered");
       return res.send(params.hub.challenge);
       } else {
+        if(params.hub){
+          console.log(params.hub.mode === 'subscribe', params.hub.verify_token === process.env.VerifyToken)
+
+        }
+        else{
+          console.log('no hub')
+        }
+        
         console.log("Could not register webhook!");
         return res.sendStatus(200);
       }
