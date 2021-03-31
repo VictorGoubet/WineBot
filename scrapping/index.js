@@ -1,7 +1,6 @@
 'use strict';
 
 const axios = require('axios');
-const cheerio = require('cheerio');
 const {'v5': uuidv5} = require('uuid');
 const {optionsInfo, optionsReviews} = require('./headers.js')
 
