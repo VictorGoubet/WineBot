@@ -9,7 +9,9 @@ class FBeamer{
   registerHook(req, res) {
     const params = req.query;
     try {
-      console.log(params.hub.mode === 'subscribe', params.hub.verify_token === process.env.VerifyToken)
+      if(params.hub){
+        console.log(params.hub.mode === 'subscribe', params.hub.verify_token === process.env.VerifyToken)
+      }
       if (params.hub && params.hub.mode === 'subscribe' && params.hub.verify_token === process.env.VerifyToken) {
       console.log("Webhook is registered");
       return res.send(params.hub.challenge);

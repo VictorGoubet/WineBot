@@ -8,6 +8,7 @@ const bp = require('body-parser');
 const FB = new fbeamer();
 const server = express();
 const PORT = process.env.PORT;
+console.log(PORT)
 
 const launch_server = () =>{
   server.get('/', (req, res) => FB.registerHook(req, res));
