@@ -6,26 +6,12 @@ const mapper = require('./map_intent')
 
 class FBeamer{
 
-  constructor({pageAccessToken , VerifyToken, appSecret}){
-    try{
-      this.pageAccessToken = pageAccessToken;
-      this.VerifyToken = VerifyToken;
-      this.appSecret = appSecret;
-    }catch{
-      console.log("We don't have the two Tokens");
-    }
-  }
-
   registerHook(req, res) {
     const params = req.query;
-    const mode = params.hub.mode
-    const token = params.hub.verify_token
-    const challenge = params.hub.challenge;
-
     try {
-      if (mode === 'subscribe' && token === this.VerifyToken) {
-      console.log("webhook is registered");
-      return res.send(challenge);
+      if (params.hub && params.hub.mode === 'subscribe' && params.hub.verify_token === process.env.VerifyToken) {
+      console.log("Webhook is registered");
+      return res.send(params.hub.challenge);
       } else {
         console.log("Could not register webhook!");
         return res.sendStatus(200);
@@ -84,10 +70,11 @@ class FBeamer{
   sendMessage(response, sender){
     let request_body = {"recipient": {"id": sender},
                         "message": response}
+    console.log(request_body)
                          
     return new Promise((resolve, reject) => { request ({
       uri: 'https://graph.facebook.com/v2.6/me/messages',
-      qs :{access_token : this.pageAccessToken},
+      qs :{access_token : process.env.pageAccessToken},
            method: 'POST',
            json: request_body
       }, (err , res , body) => {
@@ -104,37 +91,68 @@ class FBeamer{
 
   wineTemplate(id, wine){
 
-
-
-    let rate_btn = ["1", "2", "3"].map(x=>{
-        return {
-                "type": "postback",
-                "title": x,
-                "payload": x,
-                }
-    })
-
     let msg = {
       "attachment": {
         "type": "template",
         "payload": {
           "template_type": "generic",
           "elements": [{
-            "title": wine.name ,
-            "subtitle": `Year: ${wine.year}\nWinery: ${wine.winery}`,
-            "image_url": wine.picture,
-            "buttons": rate_btn        
+            "title": `${wine.name} ${wine.type!="autre"?`(${wine.type})`:""}`,
+            "subtitle": `Year: ${wine.year}\nWinery: ${wine.winery}\nFrom: ${wine.region} - ${wine.country}\nType: ${wine.type}`,
+            "default_action": {
+              "type": "web_url",
+              "url": wine.photo
+            },
+            "image_url": wine.photo,
+            "buttons": [{
+                        "type": "web_url",
+                        "title": "Discover more wines !",
+                        "url":`https://www.vivino.com/search/wines?q=${wine.name}`
+                        } ]  
           }]
         }
+
       }
     }
-    console.log(msg.attachment.payload)
     return this.sendMessage(msg, id)
   }
 
   txt(id, text){
     return this.sendMessage({text}, id);
     }
+
+
+  carrousel(id, wines){
+
+    let wines_elements = wines.map(wine=>{
+      return {
+            "title": `${wine.name} ${wine.type!="autre"?`(${wine.type})`:""}` ,
+            "subtitle": `Year: ${wine.year}\nWinery: ${wine.winery}\nFrom: ${wine.region} - ${wine.country}\nType: ${wine.type}`,
+            "default_action": {
+              "type": "web_url",
+              "url": wine.photo
+            },
+            "image_url": wine.photo,
+            "buttons": [{
+                        "type": "web_url",
+                        "title": "Discover more wines !",
+                        "url":`https://www.vivino.com/search/wines?q=${wine.name}`
+                        }]
+      }
+    })
+
+
+    let msg = {
+      "attachment":{
+          "type":"template",
+          "payload":{
+            "template_type":"generic",
+            "elements":wines_elements
+          }
+        }
+      }
+    return this.sendMessage(msg, id)
+  }
 
 
 

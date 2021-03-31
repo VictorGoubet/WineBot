@@ -6,10 +6,10 @@ async function getData(n_page){
 
   let all_wines, all_reviews;
   try{
-    let promises_wine = [...Array(n_page).keys()].map(x=>{wine.getWinyInfo(x+30)})
+    let promises_wine = [...Array(n_page).keys()].map(x=>{wine.getWinyInfo(x+70)})
     all_wines = await Promise.all(promises_wine)
     all_wines = all_wines.flat()
-
+    
     let promises_reviews = all_wines.map(x=>{return wine.getWinyReviews(x._id)})
     all_reviews = await Promise.all(promises_reviews)
     all_reviews = all_reviews.flat()

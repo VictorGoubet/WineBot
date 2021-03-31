@@ -1,12 +1,11 @@
 'use strict';
 
-const config = require('./config');
 const fbeamer = require('./fbeamer/index');
 const express = require('express');
 const bp = require('body-parser');
 
 
-const FB = new fbeamer(config.FB);
+const FB = new fbeamer();
 const server = express();
 const PORT = process.env.PORT;
 
