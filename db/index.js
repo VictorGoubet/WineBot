@@ -1,4 +1,3 @@
-require('dotenv').config();
 const {MongoClient} = require('mongodb');
 
 const MONGODB_DB_NAME = 'WineBot';
