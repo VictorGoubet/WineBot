@@ -15,7 +15,7 @@ const mapIntent = async (data, FB) => {
 
     case 'hello':
       await FB.txt(id,'Hey! What a winy day today ! 🍷 You seem thiiiirsty, I\'ll help you !');
-      await FB.txt(id,'You can ask me about your favorite wine from our secret database 🤫 (Try \'Tell me about Bourgogne\' or \'Tell me about Bourgogne (Louis Jadot)\' )\n I can also recommend you a wine that I think would suit you perfectly 😎 (Try \'Give me a white/red Wine\')\nYou are hesitent between two wines ? Let me help you chose, you have no time for bad choices 🤧 (Try \'Champagne or Bourgogne ? \' or \'Champagne or Bourgogne (Louis Jadot) ? \') ');
+      await FB.txt(id,'You can ask me about your favorite wine from our secret database 🤫 (Try \'Tell me about Bourgogne\' or \'Give me some info on Prosecco (Zonin)\' )\n I can also recommend you a wine that I think would suit you perfectly 😎 (Try \'Give me some recommendations or What are the best wines ?\')\nYou are hesitent between two wines ? Let me help you chose, you have no time for bad choices 🤧 (Try \'Champagne or Bourgogne ? \' or \'What is the best wine between Tempranillo(Campo Viejo) and Rioja Crianza (Marqués de Cáceres)\').\n I can finally give you your user vector, just ask "user vector" ');
     
       let ratings = await db.find({'user_id':parseInt(id)},'reviews');
       if(ratings.length == 0){

@@ -9,19 +9,11 @@ class FBeamer{
   registerHook(req, res) {
     const params = req.query;
     try {
-      console.log(process.env.VerifyToken)
-      if (params.hub && params.hub.mode === 'subscribe' && params.hub.verify_token === process.env.VerifyToken) {
-      console.log("Webhook is registered");
-      return res.send(params.hub.challenge);
-      } else {
-        if(params.hub){
-          console.log(params.hub.mode === 'subscribe', params.hub.verify_token === process.env.VerifyToken)
-
-        }
-        else{
-          console.log('no hub')
-        }
-        
+      const mode = params['hub.mode'], token = params['hub.verify_token'], challenge = params['hub.challenge'];
+      if (mode === 'subscribe' && token === process.env.VerifyToken) {
+        console.log("Webhook is registered");
+        return res.send(challenge);
+      } else {  
         console.log("Could not register webhook!");
         return res.sendStatus(200);
       }
